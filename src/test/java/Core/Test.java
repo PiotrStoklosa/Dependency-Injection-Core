@@ -12,9 +12,9 @@ public class Test {
 
         SimpleContainer c = new SimpleContainer();
 
-        c.RegisterType( Foo.class, true );
-        Foo f1 = c.Resolve( Foo.class);
-        Foo f2 = c.Resolve( Foo.class);
+        c.RegisterType( FirstImplementationOfInterfaceTest.class, true );
+        FirstImplementationOfInterfaceTest f1 = c.Resolve( FirstImplementationOfInterfaceTest.class);
+        FirstImplementationOfInterfaceTest f2 = c.Resolve( FirstImplementationOfInterfaceTest.class);
 
         Assert.assertEquals(f1, f2);
 
@@ -25,15 +25,15 @@ public class Test {
 
         SimpleContainer c = new SimpleContainer();
 
-        c.RegisterType(IFoo.class, Foo.class, false );
-        IFoo f = c.Resolve(IFoo.class);
+        c.RegisterType(InterfaceTest.class, FirstImplementationOfInterfaceTest.class, false );
+        InterfaceTest f = c.Resolve(InterfaceTest.class);
 
-        Assert.assertTrue(f instanceof Foo);
+        Assert.assertTrue(f instanceof FirstImplementationOfInterfaceTest);
 
-        c.RegisterType( IFoo.class, Bar.class, false );
-        IFoo g = c.Resolve(IFoo.class);
+        c.RegisterType( InterfaceTest.class, SecondImplementationOfInterfaceTest.class, false );
+        InterfaceTest g = c.Resolve(InterfaceTest.class);
 
-        Assert.assertTrue(g instanceof Bar);
+        Assert.assertTrue(g instanceof SecondImplementationOfInterfaceTest);
 
     }
 
@@ -42,7 +42,7 @@ public class Test {
 
         SimpleContainer c = new SimpleContainer();
 
-        IFoo f = c.Resolve(IFoo.class);
+        InterfaceTest f = c.Resolve(InterfaceTest.class);
 
     }
 
@@ -51,7 +51,7 @@ public class Test {
 
         SimpleContainer c = new SimpleContainer();
 
-        Foo f = c.Resolve( Foo.class);
+        FirstImplementationOfInterfaceTest f = c.Resolve( FirstImplementationOfInterfaceTest.class);
 
     }
 
