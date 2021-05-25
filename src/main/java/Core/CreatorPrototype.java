@@ -7,11 +7,11 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @author Piotr Stoklosa
  */
-public class CreatorPrototype implements Creator{
+class CreatorPrototype implements Creator{
 
     Class<?> constructor;
 
-    public CreatorPrototype(Class<?> constructor) {
+    CreatorPrototype(Class<?> constructor) {
         this.constructor = constructor;
     }
 

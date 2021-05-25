@@ -7,12 +7,12 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @author Piotr Stoklosa
  */
-public class CreatorSingleton implements Creator{
+class CreatorSingleton implements Creator{
 
     Class<?> constructor;
     Object instance = null;
 
-    public CreatorSingleton(Class<?> constructor) {
+    CreatorSingleton(Class<?> constructor) {
         this.constructor = constructor;
     }
 

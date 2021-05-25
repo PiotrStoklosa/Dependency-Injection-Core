@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @author Piotr Stoklosa
  */
-public interface Creator {
+interface Creator {
 
     /**
      * Create requested object

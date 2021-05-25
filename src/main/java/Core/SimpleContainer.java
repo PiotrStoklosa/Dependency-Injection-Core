@@ -15,7 +15,7 @@ public class SimpleContainer {
     /**
      * Bind types with their constructors
      */
-    final Map<String, Creator> creators;
+    private final Map<String, Creator> creators;
     {
         creators = new HashMap<>();
     }
