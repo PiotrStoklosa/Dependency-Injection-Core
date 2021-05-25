@@ -76,7 +76,7 @@ public class SimpleContainer {
             if (aClass.isInterface())
                 throw new NoInterfaceImplementationFoundException();
 
-            return (T) Class.forName(type.getTypeName()).getConstructor(null).newInstance();
+            return (T) Class.forName(type.getTypeName()).getConstructor((Class<?>[]) null).newInstance();
         }
 
         return (T) creators.get(type.getTypeName()).createObject();

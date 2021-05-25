@@ -31,7 +31,7 @@ class CreatorSingleton implements Creator{
             lock.lock();
 
             if (instance == null){
-                instance = constructor.getConstructor(null).newInstance();
+                instance = constructor.getConstructor((Class<?>[]) null).newInstance();
             }
 
             lock.unlock();

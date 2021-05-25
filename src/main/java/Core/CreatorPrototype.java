@@ -18,7 +18,7 @@ class CreatorPrototype implements Creator{
     @Override
     public Object createObject() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
 
-            return constructor.getConstructor( null).newInstance();
+            return constructor.getConstructor((Class<?>[]) null).newInstance();
 
     }
 
