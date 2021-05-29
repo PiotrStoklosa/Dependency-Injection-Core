@@ -27,9 +27,9 @@ public class SimpleContainer {
      * @param singleton if true container will return only one instance
      *                  if false container will return new instances every time
      */
-    public void RegisterType(Type type, boolean singleton) {
+    public void registerType(Type type, boolean singleton) {
 
-        RegisterType(type, type, singleton);
+        registerType(type, type, singleton);
 
     }
 
@@ -41,7 +41,7 @@ public class SimpleContainer {
      * @param singleton if true container will return only one instance
      *                  if false container will return new instances every time
      */
-    public void RegisterType(Type type1, Type type2, boolean singleton){
+    public void registerType(Type type1, Type type2, boolean singleton){
 
         Class<?> aClass = null;
         try {
@@ -56,13 +56,27 @@ public class SimpleContainer {
             creators.put(type1.getTypeName(), new CreatorPrototype(aClass));
 
     }
+
+    /**
+     * Binds a type to its particular instance
+     *
+     * @param type type to register
+     * @param instance instance of the type or its more specific implementation
+     */
+    public <T> void registerInstance(Type type, T instance ){
+
+        creators.put(type.getTypeName(), new CreatorParticularInstanceSingleton(instance));
+
+    }
+
     /**
      * Create an object using HashMap creators
      *
      * @param type requested type of the class
      * @return requested object
      */
-    public <T> T Resolve(Type type) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoInterfaceImplementationFoundException, ClassNotFoundException {
+    @SuppressWarnings("unchecked")
+    public <T> T resolve(Type type) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoInterfaceImplementationFoundException, ClassNotFoundException {
 
         Class<?> aClass = null;
         try {

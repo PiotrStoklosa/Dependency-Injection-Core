@@ -12,9 +12,9 @@ public class Test {
 
         SimpleContainer c = new SimpleContainer();
 
-        c.RegisterType( FirstImplementationOfInterfaceTest.class, true );
-        FirstImplementationOfInterfaceTest f1 = c.Resolve( FirstImplementationOfInterfaceTest.class);
-        FirstImplementationOfInterfaceTest f2 = c.Resolve( FirstImplementationOfInterfaceTest.class);
+        c.registerType( FirstImplementationOfInterfaceTest.class, true );
+        FirstImplementationOfInterfaceTest f1 = c.resolve( FirstImplementationOfInterfaceTest.class);
+        FirstImplementationOfInterfaceTest f2 = c.resolve( FirstImplementationOfInterfaceTest.class);
 
         Assert.assertEquals(f1, f2);
 
@@ -25,13 +25,13 @@ public class Test {
 
         SimpleContainer c = new SimpleContainer();
 
-        c.RegisterType(InterfaceTest.class, FirstImplementationOfInterfaceTest.class, false );
-        InterfaceTest f = c.Resolve(InterfaceTest.class);
+        c.registerType(InterfaceTest.class, FirstImplementationOfInterfaceTest.class, false );
+        InterfaceTest f = c.resolve(InterfaceTest.class);
 
         Assert.assertTrue(f instanceof FirstImplementationOfInterfaceTest);
 
-        c.RegisterType( InterfaceTest.class, SecondImplementationOfInterfaceTest.class, false );
-        InterfaceTest g = c.Resolve(InterfaceTest.class);
+        c.registerType( InterfaceTest.class, SecondImplementationOfInterfaceTest.class, false );
+        InterfaceTest g = c.resolve(InterfaceTest.class);
 
         Assert.assertTrue(g instanceof SecondImplementationOfInterfaceTest);
 
@@ -42,7 +42,7 @@ public class Test {
 
         SimpleContainer c = new SimpleContainer();
 
-        InterfaceTest f = c.Resolve(InterfaceTest.class);
+        InterfaceTest f = c.resolve(InterfaceTest.class);
 
     }
 
@@ -51,7 +51,21 @@ public class Test {
 
         SimpleContainer c = new SimpleContainer();
 
-        FirstImplementationOfInterfaceTest f = c.Resolve( FirstImplementationOfInterfaceTest.class);
+        FirstImplementationOfInterfaceTest f = c.resolve( FirstImplementationOfInterfaceTest.class);
+
+    }
+
+    @org.junit.Test
+    public void testParticularInstance() throws NoInterfaceImplementationFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+
+        SimpleContainer c = new SimpleContainer();
+
+        InterfaceTest f1 = new FirstImplementationOfInterfaceTest();
+        c.registerInstance( InterfaceTest.class, f1);
+
+        InterfaceTest f2 = c.resolve(InterfaceTest.class);
+
+        Assert.assertEquals(f1, f2);
 
     }
 
