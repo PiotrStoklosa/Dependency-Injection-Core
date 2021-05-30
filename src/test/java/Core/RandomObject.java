@@ -5,5 +5,5 @@ package Core;
  *
  * @author Piotr Stoklosa
  */
-public class B {
+public class RandomObject {
 }

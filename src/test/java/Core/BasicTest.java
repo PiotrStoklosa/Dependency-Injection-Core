@@ -2,10 +2,11 @@ package Core;
 
 import org.junit.Assert;
 import java.lang.reflect.InvocationTargetException;
+
 /**
  * @author Piotr Stoklosa
  */
-public class Test {
+public class BasicTest {
 
     @org.junit.Test
     public void testConcatenate() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -68,38 +69,4 @@ public class Test {
         Assert.assertEquals(f1, f2);
 
     }
-
-    @org.junit.Test
-    public void testDependencyInjection() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-
-        SimpleContainer c = new SimpleContainer();
-        A a = c.resolve(A.class);
-        Assert.assertNotNull(a.b);
-
-    }
-
-    @org.junit.Test
-    public void testStringDependencyInjection() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-
-        SimpleContainer c = new SimpleContainer();
-
-        c.registerInstance( String.class, "text" );
-        X x = c.resolve(X.class);
-
-        Assert.assertEquals(x.string, "text");
-
-    }
-
-    @org.junit.Test
-    public void testDependencyInjectionRecursion() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-
-        SimpleContainer c = new SimpleContainer();
-        c.registerType(InterfaceTest.class, FirstImplementationOfInterfaceTest.class, false );
-        c.registerType(Tree.class, TreeImplementation.class, false);
-        RecursionTree a = c.resolve(RecursionTree.class);
-
-        Assert.assertNotNull(a.t);
-
-    }
-
 }
