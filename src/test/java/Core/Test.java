@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 public class Test {
 
     @org.junit.Test
-    public void testConcatenate() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoInterfaceImplementationFoundException, ClassNotFoundException {
+    public void testConcatenate() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         SimpleContainer c = new SimpleContainer();
 
@@ -21,7 +21,7 @@ public class Test {
     }
 
     @org.junit.Test
-    public void testInterfaces() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoInterfaceImplementationFoundException, ClassNotFoundException {
+    public void testInterfaces() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         SimpleContainer c = new SimpleContainer();
 
@@ -38,7 +38,7 @@ public class Test {
     }
 
     @org.junit.Test(expected = NoInterfaceImplementationFoundException.class)
-    public void testNoInterfaceImplementation() throws NoInterfaceImplementationFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testNoInterfaceImplementation() throws NoInterfaceImplementationFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         SimpleContainer c = new SimpleContainer();
 
@@ -47,7 +47,7 @@ public class Test {
     }
 
     @org.junit.Test
-    public void testNoConcreteClass() throws NoInterfaceImplementationFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testNoConcreteClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         SimpleContainer c = new SimpleContainer();
 
@@ -56,7 +56,7 @@ public class Test {
     }
 
     @org.junit.Test
-    public void testParticularInstance() throws NoInterfaceImplementationFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testParticularInstance() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         SimpleContainer c = new SimpleContainer();
 
@@ -66,6 +66,39 @@ public class Test {
         InterfaceTest f2 = c.resolve(InterfaceTest.class);
 
         Assert.assertEquals(f1, f2);
+
+    }
+
+    @org.junit.Test
+    public void testDependencyInjection() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+
+        SimpleContainer c = new SimpleContainer();
+        A a = c.resolve(A.class);
+        Assert.assertNotNull(a.b);
+
+    }
+
+    @org.junit.Test
+    public void testStringDependencyInjection() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+
+        SimpleContainer c = new SimpleContainer();
+
+        c.registerInstance( String.class, "text" );
+        X x = c.resolve(X.class);
+
+        Assert.assertEquals(x.string, "text");
+
+    }
+
+    @org.junit.Test
+    public void testDependencyInjectionRecursion() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+
+        SimpleContainer c = new SimpleContainer();
+        c.registerType(InterfaceTest.class, FirstImplementationOfInterfaceTest.class, false );
+        c.registerType(Tree.class, TreeImplementation.class, false);
+        RecursionTree a = c.resolve(RecursionTree.class);
+
+        Assert.assertNotNull(a.t);
 
     }
 

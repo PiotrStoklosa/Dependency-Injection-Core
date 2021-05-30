@@ -4,5 +4,5 @@ package Core;
  *
  * @author Piotr Stoklosa
  */
-class NoInterfaceImplementationFoundException extends Exception{
+class NoInterfaceImplementationFoundException extends RuntimeException{
 }

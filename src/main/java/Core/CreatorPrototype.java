@@ -1,5 +1,6 @@
 package Core;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -9,16 +10,18 @@ import java.lang.reflect.InvocationTargetException;
  */
 class CreatorPrototype implements Creator{
 
-    Class<?> constructor;
+    Constructor<?> constructor;
+    Object[] parameters;
 
-    CreatorPrototype(Class<?> constructor) {
+    CreatorPrototype(Constructor<?> constructor,Object[] parameters ) {
         this.constructor = constructor;
+        this.parameters = parameters;
     }
 
     @Override
-    public Object createObject() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public Object createObject() throws InvocationTargetException, InstantiationException, IllegalAccessException {
 
-            return constructor.getConstructor((Class<?>[]) null).newInstance();
+            return constructor.newInstance(parameters);
 
     }
 

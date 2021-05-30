@@ -1,5 +1,6 @@
 package Core;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -11,27 +12,29 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 class CreatorSingleton implements Creator{
 
-    Class<?> constructor;
+    Constructor<?> constructor;
     Object instance = null;
+    Object[] parameters;
 
     private static final Lock lock;
     static {
         lock = new ReentrantLock();
     }
 
-    CreatorSingleton(Class<?> constructor) {
+    CreatorSingleton(Constructor<?> constructor, Object[] parameters) {
         this.constructor = constructor;
+        this.parameters = parameters;
     }
 
     @Override
-    public Object createObject() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public Object createObject() throws InvocationTargetException, InstantiationException, IllegalAccessException {
 
         if (instance == null){
 
             lock.lock();
 
             if (instance == null){
-                instance = constructor.getConstructor((Class<?>[]) null).newInstance();
+                instance = constructor.newInstance(parameters);
             }
 
             lock.unlock();
