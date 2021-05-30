@@ -26,11 +26,19 @@ public class SimpleContainer {
      *
      * @param parameters an empty table that will be filled with the specified objects.
      * @param constructor constructor from which the parameters will be retrieved.
+     *
+     * @throws RecursionParameterException when the method finds infinite recursion.
      */
-    private void fillParameters(Object[] parameters, Constructor<?> constructor) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    private void fillParameters(Object[] parameters, Constructor<?> constructor) throws RecursionParameterException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+
+        Class<?> aClass = constructor.getDeclaringClass();
 
         int i = 0;
         for (var parameter : constructor.getParameterTypes()){
+
+            if (parameter.isAssignableFrom(aClass))
+                throw new RecursionParameterException();
+
             parameters[i] = resolve(parameter);
             i++;
         }

@@ -64,4 +64,12 @@ public class ParametrizedConstructorsTest {
 
     }
 
+    @org.junit.Test(expected = RecursionParameterException.class)
+    public void testRecursion() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+
+        SimpleContainer c = new SimpleContainer();
+        c.registerType(RecursionClass.class, false);
+
+    }
+
 }
